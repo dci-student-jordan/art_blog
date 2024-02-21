@@ -5,3 +5,4 @@ Group Project for DCI
 1. clone this repo.
 2. create and activate virtual environment
 3. run pip install -r requirements.txt
+4. mohsen
