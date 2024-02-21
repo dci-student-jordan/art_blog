@@ -5,4 +5,7 @@
 - can also do what blog users are allowed.
 
 ### blog:
-- blog_users: can view (api), comment (Model), or buy (delete from api) artwork
+- blog_users: can view (api), comment (Model) artwork
+
+### shop:
+- to buy artwork (blog_users and artists) delete from api
