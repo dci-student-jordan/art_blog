@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<head>
+    
+    <title>Data List Page</title>
+</head>
+<body>
+    <h1>Data List</h1>
+    <ul>
+        {% for item in items %}
+            <li>{{ item.name }} - {{ item.description }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
