@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 
 def user_directory_path(instance, filename):
     # images will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'images/user_{0}/{1}'.format(instance.user.username, filename)
+    return 'images/artist_{0}/{1}'.format(instance.owner.username, filename)
 
 def validate_size(value):
     if value is None:
@@ -22,5 +22,5 @@ class ArtWork(models.Model):
     image = models.ImageField(upload_to=user_directory_path)
     price = models.PositiveIntegerField()
     size = models.JSONField(null=True, blank=True, validators=([validate_size]))
-    voters = models.ManyToManyField(User, related_name='voted_images')
+    voters = models.ManyToManyField(User, related_name='voted_images', blank=True)
     uploade_time = models.DateTimeField(auto_now_add=True)
