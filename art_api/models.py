@@ -22,5 +22,5 @@ class ArtWork(models.Model):
     image = models.ImageField(upload_to=user_directory_path)
     price = models.PositiveIntegerField()
     size = models.JSONField(null=True, blank=True, validators=([validate_size]))
-    voters = models.ManyToManyField(User, related_name='voted_images', null=True, blank=True)
+    voters = models.ManyToManyField(User, related_name='voted_images', blank=True)
     uploade_time = models.DateTimeField(auto_now_add=True)
