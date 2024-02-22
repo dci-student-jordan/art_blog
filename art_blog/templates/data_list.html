@@ -8,7 +8,9 @@
     <h1>Data List</h1>
     <ul>
         {% for item in items %}
-            <li>{{ item.name }} - {{ item.description }}</li>
+            <li>
+                <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.owner }}</a> 
+            </li>
         {% endfor %}
     </ul>
 </body>
