@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, DetailView
 
-# from .models import Item
+from art_api.models import ArtWork as Item
 from .forms import CommentForm
 from .models import Comment
 
