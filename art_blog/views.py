@@ -24,7 +24,7 @@ class DataDetailsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         item = self.get_object()
-        # context["comments"] = Comment.objects.filter(item=item)
+        context["comments"] = Comment.objects.filter(item=item)
         context["MEDIA_URL"] = settings.MEDIA_URL
         return context
 

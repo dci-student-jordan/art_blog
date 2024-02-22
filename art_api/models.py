@@ -18,6 +18,7 @@ def validate_size(value):
             raise ValidationError(f"Invalid key '{key}' found. Only 'height' and 'width' are allowed.")
 
 class ArtWork(models.Model):
+    name = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=user_directory_path)
     price = models.PositiveIntegerField()

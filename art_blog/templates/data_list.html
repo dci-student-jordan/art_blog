@@ -9,7 +9,7 @@
     <ul>
         {% for item in items %}
             <li>
-                <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.owner }}</a> 
+                <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.name }} ({{ item.owner }})</a> 
             </li>
         {% endfor %}
     </ul>
