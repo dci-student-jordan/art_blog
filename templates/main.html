@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Set background color */
+        body {
+            align-items: end;
+            background-color: #e9ecef; /* light grey background color */
+        }
+
+        /* Move buttons to left side */
+        .btn-left {
+            text-align: left;
+        }
+    </style>
+</head>
+<header style="text-align: center;">{% block title %}{% endblock title %}</header>
+<body style="margin: 50px;">
+    <div style="display: flex;">
+        <nav style="width: 270px;">
+            <ul style="list-style: none;">
+                {% if user.is_authenticated %}
+                    <li>you're logged in as {{ user.username }}</li>
+                    <li><form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">Logout</button>
+                    </form></li>
+                    {% if user.is_staff %}
+                        <li><a href="{% url 'art_api:upload' %}">upload Artwork</a></li>
+                    {% endif %}
+                    <li></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="btn btn-outline-primary">log in</a></li>
+                    <li><a href="{% url 'art_api:register_user' %}">register as user</a></li>
+                {% endif %}
+                <li><a href="{% url 'art_blog:main_page' %}">Home page</a></li>
+                <li><a href="{% url 'art_blog:data_list' %}">Our ArtWorks</a></li>
+            </ul>
+        </nav>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+</body>
+</html>
+
+
+
+    
