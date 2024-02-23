@@ -132,4 +132,3 @@ MEDIA_URL = '/media/'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOGIN_REDIRECT_URL = reverse_lazy("art_blog:data_list")
-LOGIN_URL=reverse_lazy("art_blog:main_page")
