@@ -6,14 +6,14 @@
 {% block content %}
     <div style="display: flex; justify-content: space-evenly; align-items: center;">
         <div>
-            <h1>Details for '{{item.name}}'</h1>
-            <h2>Artist: {{ item.owner }}</h2>
+            <h3>Details for '{{item.name}}'</h3>
+            <h4>Artist: {{ item.owner }}</h4>
             <p>size: {{ item.size.width }}cm * {{ item.size.height }}cm</p>
             <p>price: {{item.price}} €</p>
         </div>
         <div style="display: flex;">
             {% if user.is_authenticated %}
-                <button style="margin: 20px;" type="submit" form="voteForm">
+                <button class="btn btn-outline-primary" style="margin: 20px;" type="submit" form="voteForm">
                     {% if item in user.voted_images.all %}
                         unVote
                     {% else %}
@@ -25,26 +25,38 @@
                     <input type="hidden" name="vote" value="1">
                 </form>
             {% endif %}
-            {% if item.voters.all %}
-                <p>Voters: {% for vote in item.voters.all %} {{vote.username}} {% endfor %}</p>
-            {% endif %}
+            {% with voters=item.voters.all %}
+                <ul>
+                    <li style="list-style: none;">Voters: {{voters|length}}</li>
+                    {% for vote in voters %}
+                        <li>{{vote.username}}</li>
+                    {% endfor %}
+                </ul>
+            {% endwith %}
         </div>
         {% if user.is_authenticated %}
-            <button style="margin: 20px;">buy now</button>
+            {% if not is_sold %}
+                <a href="{% url 'art_shop:buyproduct' item.pk %}" class="btn btn-outline-success" style="margin: 20px;">buy now</a>
+            {% else %}
+                <p>Item already sold.</p>
+            {% endif %}
         {% endif %}
     </div>
-    <img src="{{MEDIA_URL}}/{{item.image}}">
-    {%if comments %}
-    <h4>user comments:</h4>
-    {% endif %}
-    {% for comment in  comments %}
-        <p>{{comment}}</p>
-    {% endfor %}
-    {% if user.is_authenticated %}
-    <form method="post">
-        {% csrf_token %}
-        {{ comment_form }}
-        <input type="submit" value="post comment">
-    </form>
-    {% endif %}
+    <img src="{{MEDIA_URL}}/{{item.image}}" style="margin: 100px; max-height:700px;">
+    <div style="float: right; margin-top:300px;">
+        {%if comments %}
+        <h4 style="text-align: end;">user comments:</h4>
+        {% endif %}
+        {% for comment in  comments %}
+            <p style="text-align: end;">{{comment}}</p>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <h4 style="text-align: end; margin-top: 50px;">Your comment:</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form }}
+            <input  class="btn btn-outline-primary" type="submit" value="post comment">
+        </form>
+        {% endif %}
+    </div>
 {% endblock content %}

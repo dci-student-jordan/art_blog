@@ -1,8 +1,8 @@
 {% extends "main.html" %}
 {% block title %}<h1>Our ArtWorks</h1>{% endblock title %}
 {% block content %}
-    <h1>Our Artworks List:</h1>
-    <ul>
+    <h1 style="text-align: end;">Our Artworks List:</h1>
+    <ul style="margin: 100px;">
         {% for item in items %}
             <li style="width: 300px; display: flex; justify-content: space-between; margin: 20px; align-items: center;">
                 <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.name }} ({{ item.owner }})</a>
