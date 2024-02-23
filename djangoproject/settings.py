@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'art_api.apps.ArtApiConfig',
     'art_blog.apps.ArtBlogConfig',
+    'art_shop',
 ]
 
 MIDDLEWARE = [
