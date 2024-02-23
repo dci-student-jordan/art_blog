@@ -23,15 +23,22 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('user/', include('art_api.urls')),
+    path("admin/", admin.site.urls),
+    path("user/", include("art_api.urls")),
     path("art_blog/", include("art_blog.urls")),
-    path('auth/', include('django.contrib.auth.urls')),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/art_blog/'), name='logout'),
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html', success_url='/art_blog/data_list/'), name='login'),
-    path("", RedirectView.as_view(url='/art_blog/'))
+    path("auth/", include("django.contrib.auth.urls")),
+    path(
+        "logout/", auth_views.LogoutView.as_view(next_page="/art_blog/"), name="logout"
+    ),
+    path(
+        "login/",
+        auth_views.LoginView.as_view(
+            template_name="registration/login.html", success_url="/art_blog/data_list/"
+        ),
+        name="login",
+    ),
+    path("", RedirectView.as_view(url="/art_blog/")),
     path("art_shop/", include("art_shop.urls")),
-    path("art_blog/", include("art_blog.urls")),
 ]
 
 if settings.DEBUG:

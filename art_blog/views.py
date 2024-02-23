@@ -4,6 +4,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from .forms import CommentForm
 from .models import Comment
 from art_api.models import ArtWork as Item
+from art_shop.models import Selledartwork
 from django.conf import settings
 
 
@@ -28,6 +29,7 @@ class DataDetailsView(DetailView):
     context_object_name = "item"
 
     def post(self, request, *args, **kwargs):
+        # Handling comment submission
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -35,13 +37,21 @@ class DataDetailsView(DetailView):
             comment.item = self.get_object()
             comment.save()
             return redirect(self.request.path_info)
-        else:
-            return render(request, self.template_name, {"form": form})
+
+        # Handling voting action
+        if 'vote' in request.POST:
+            item = self.get_object()
+            item.vote(request.user)
+            return redirect(self.request.path_info)
+
+        return super().post(request, *args, **kwargs)
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         item = self.get_object()
+        sold_item_ids = list(Selledartwork.objects.values_list("item_id", flat=True))
+        context["is_sold"] = item.id in sold_item_ids
         context["comments"] = Comment.objects.filter(item=item)
         context["MEDIA_URL"] = settings.MEDIA_URL
         context["comment_form"] = CommentForm()
