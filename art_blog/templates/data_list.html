@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-
-<head>
-    
-    <title>Data List Page</title>
-</head>
-<body>
-    <h1>Data List</h1>
+{% extends "main.html" %}
+{% block title %}<h1>Our ArtWorks</h1>{% endblock title %}
+{% block content %}
+    <h1>Our Artworks List:</h1>
     <ul>
         {% for item in items %}
-            <li>{{ item.name }} - {{ item.description }}</li>
+            <li style="width: 300px; display: flex; justify-content: space-between; margin: 20px; align-items: center;">
+                <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.name }} ({{ item.owner }})</a>
+                <img src="{{MEDIA_URL}}/{{item.image}}" style="max-height: 80px;">
+            </li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock content %}

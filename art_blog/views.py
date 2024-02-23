@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from typing import Any
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
-
-from art_api.models import ArtWork as Item
 from .forms import CommentForm
 from .models import Comment
+from art_api.models import ArtWork as Item
+from django.conf import settings
 
 
 class MainPageView(TemplateView):
@@ -15,11 +16,36 @@ class DataListView(ListView):
     template_name = "data_list.html"
     context_object_name = "items"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["MEDIA_URL"] = settings.MEDIA_URL
+        return context
+
 
 class DataDetailsView(DetailView):
     model = Item
     template_name = "data_details.html"
     context_object_name = "item"
+
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user_fname = request.user
+            comment.item = self.get_object()
+            comment.save()
+            return redirect(self.request.path_info)
+        else:
+            return render(request, self.template_name, {"form": form})
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        item = self.get_object()
+        context["comments"] = Comment.objects.filter(item=item)
+        context["MEDIA_URL"] = settings.MEDIA_URL
+        context["comment_form"] = CommentForm()
+        return context
 
 
 class CommentView(TemplateView):

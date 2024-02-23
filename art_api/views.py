@@ -1,8 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
-from .forms import RegisterArtistForm, RegisterUserForm
+from .forms import RegisterArtistForm, RegisterUserForm, AddArtworkForm
 
 # Create your views here.
 
@@ -26,4 +24,16 @@ class CreateUserView(FormView):
 
     def form_valid(self, form):
         form.save()
+        return super().form_valid(form)
+
+
+class UploadArtWorkView(FormView):
+    template_name = "upload_artwork.html"
+    form_class= AddArtworkForm
+    success_url = reverse_lazy("art_api:upload_success")
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.owner = self.request.user
+        instance.save()
         return super().form_valid(form)
