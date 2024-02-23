@@ -1,13 +1,30 @@
-<!DOCTYPE html>
-<head>
-    <title>Data Details Page</title>
-</head>
-<body>
-    <h1>Details for {{item.name}}</h1>
-    <h2>Artist: {{ item.owner }}</h2>
+{% extends "main.html" %}
+{% block title %}
+    <h1>'{{item.name}}'</h1>
+    <h3>by {{item.owner}}</h3>
+{% endblock title %}
+{% block content %}
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <h1>Details for '{{item.name}}'</h1>
+            <h2>Artist: {{ item.owner }}</h2>
+        </div>
+        <button style="margin: 20px;">buy now</button>
+    </div>
+    <p>size: {{ item.size.width }}cm * {{ item.size.height }}cm</p>
+    <p>price: {{item.price}} €</p>
     <img src="{{MEDIA_URL}}/{{item.image}}">
-    <p>size:</p>
-    <p>price:</p>
-    <p><a href="{% url 'art_blog:comment_box' %}">Add Comment</a></p>
-</body>
-</html>
+    {%if comments %}
+    <h4>user comments:</h4>
+    {% endif %}
+    {% for comment in  comments %}
+        <p>{{comment}}</p>
+    {% endfor %}
+    {% if user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit" value="post comment">
+    </form>
+    {% endif %}
+{% endblock content %}
