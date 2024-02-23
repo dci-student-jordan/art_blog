@@ -9,6 +9,7 @@
     <style>
         /* Set background color */
         body {
+            align-items: end;
             background-color: #e9ecef; /* light grey background color */
         }
 
@@ -18,27 +19,27 @@
         }
     </style>
 </head>
-<header>{% block title %}{% endblock title %}</header>
-<body>
+<header style="text-align: center;">{% block title %}{% endblock title %}</header>
+<body style="margin: 50px;">
     <div style="display: flex;">
         <nav style="width: 270px;">
             <ul style="list-style: none;">
                 {% if user.is_authenticated %}
-                <li>you're logged in as {{ user.username }}</li>
-                <li><form action="{% url 'logout' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form></li>
-                {% if user.is_staff %}
-                    <li><a href="{% url 'art_api:upload' %}">upload Artwork</a></li>
+                    <li>you're logged in as {{ user.username }}</li>
+                    <li><form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">Logout</button>
+                    </form></li>
+                    {% if user.is_staff %}
+                        <li><a href="{% url 'art_api:upload' %}">upload Artwork</a></li>
+                    {% endif %}
+                    <li></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="btn btn-outline-primary">log in</a></li>
+                    <li><a href="{% url 'art_api:register_user' %}">register as user</a></li>
                 {% endif %}
-                <li></li>
-                {% else %}
-                <li><a href="{% url 'login' %}">log in</a></li>
-                <li><a href="{% url 'art_api:register_user' %}">register as user</a></li>
-                <p><a href="{% url 'art_blog:main_page' %}">Home page</a></p>
-                {% endif %}
-                
+                <li><a href="{% url 'art_blog:main_page' %}">Home page</a></li>
+                <li><a href="{% url 'art_blog:data_list' %}">Our ArtWorks</a></li>
             </ul>
         </nav>
         <section>
