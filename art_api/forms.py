@@ -7,14 +7,14 @@ class RegisterArtistForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
 
 class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email']
 
 
 class AddArtworkForm(forms.ModelForm):

@@ -7,6 +7,28 @@
 </head>
 <header>{% block title %}{% endblock title %}</header>
 <body>
-    {% block content %}{% endblock %}
+    <div style="display: flex;">
+        <nav style="width: 270px;">
+            <ul style="list-style: none;">
+                {% if user.is_authenticated %}
+                <li>you're logged in as {{ user.username }}</li>
+                <li><form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form></li>
+                {% if user.is_staff %}
+                    <li><a href="{% url 'art_api:upload' %}">upload Artwork</a></li>
+                {% endif %}
+                <li></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">log in</a></li>
+                <li><a href="{% url 'art_api:register_user' %}">register as user</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+    </div>
 </body>
 </html>
