@@ -15,7 +15,8 @@ def validate_size(value):
     allowed_keys = {'height', 'width'}
     for key in value.keys():
         if key not in allowed_keys:
-            raise ValidationError(f"Invalid key '{key}' found. Only 'height' and 'width' are allowed.")
+            example = "{'width':22, 'height':33}"
+            raise ValidationError(f"Invalid key '{key}' found. Only 'height' and 'width' are allowed.\nProvide in json format, like {example}.")
 
 class ArtWork(models.Model):
     name = models.CharField(max_length=100)
@@ -25,3 +26,9 @@ class ArtWork(models.Model):
     size = models.JSONField(null=True, blank=True, validators=([validate_size]))
     voters = models.ManyToManyField(User, related_name='voted_images', blank=True)
     uploade_time = models.DateTimeField(auto_now_add=True)
+
+    def vote(self, user):
+        if user not in self.voters.all():
+            self.voters.add(user)
+        else:
+            self.voters.remove(user)

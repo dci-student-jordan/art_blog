@@ -28,6 +28,7 @@ class DataDetailsView(DetailView):
     context_object_name = "item"
 
     def post(self, request, *args, **kwargs):
+        # Handling comment submission
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -35,8 +36,14 @@ class DataDetailsView(DetailView):
             comment.item = self.get_object()
             comment.save()
             return redirect(self.request.path_info)
-        else:
-            return render(request, self.template_name, {"form": form})
+
+        # Handling voting action
+        if 'vote' in request.POST:
+            item = self.get_object()
+            item.vote(request.user)
+            return redirect(self.request.path_info)
+
+        return super().post(request, *args, **kwargs)
 
 
     def get_context_data(self, **kwargs):
