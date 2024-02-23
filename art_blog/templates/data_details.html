@@ -3,9 +3,11 @@
     <title>Data Details Page</title>
 </head>
 <body>
-    <h1>Data Details</h1>
-    <h2>{{ item.name }}</h2>
-    <p>{{ item.description }}</p>
-   
+    <h1>Details for {{item.name}}</h1>
+    <h2>Artist: {{ item.owner }}</h2>
+    <img src="{{MEDIA_URL}}/{{item.image}}">
+    <p>size:</p>
+    <p>price:</p>
+    <p><a href="{% url 'art_blog:comment_box' %}">Add Comment</a></p>
 </body>
 </html>
