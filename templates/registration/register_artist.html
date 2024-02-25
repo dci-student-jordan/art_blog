@@ -1,11 +1,12 @@
 <!-- templates/registration/password_change_form.html -->
 {% extends "main.html" %}
+{% load crispy_forms_tags %}
 {% block title %}<h1>Create Artist Account</h1>{% endblock title %}
 {% block content %}
 <h3>Create an account for sharing your artwork here:</h3>
 <form method="POST">
     {% csrf_token %}
-{{ form }}
+    {{ form|crispy }}
 <input class="btn btn-success" type="submit" value="Create Account">
 </form>
 {% endblock content %}
