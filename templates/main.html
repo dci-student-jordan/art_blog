@@ -39,11 +39,11 @@
                         <button class="btn btn-outline-primary" type="submit">Logout</button>
                     </form></li>
                     {% if user.is_staff %}
-                        <li><a class="btn btn-outline-success" href="{% url 'art_api:upload' %}">upload Artwork</a></li>
+                        <li><a class="btn btn-outline-success" href="{% url 'art_shop:upload' %}">upload Artwork</a></li>
                     {% endif %}
                 {% else %}
                     <li><a href="{% url 'login' %}" class="btn btn-outline-primary">log in</a></li>
-                    <li><a class="btn btn-outline-success" href="{% url 'art_api:register_user' %}">register as user</a></li>
+                    <li><a class="btn btn-outline-success" href="{% url 'art_shop:register_user' %}">register as user</a></li>
                 {% endif %}
                 <li><a href="{% url 'art_blog:main_page' %}">Home page</a></li>
                 <li><a href="{% url 'art_blog:data_list' %}">Our ArtWorks</a></li>

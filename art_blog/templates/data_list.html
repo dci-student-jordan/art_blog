@@ -5,8 +5,12 @@
     <ul style="margin: 100px;">
         {% for item in items %}
             <li style="width: 300px; display: flex; justify-content: space-between; margin: 20px; align-items: center;">
-                <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.name }} ({{ item.owner }})</a>
-                <img src="{{MEDIA_URL}}/{{item.image}}" style="max-height: 80px;">
+                <a href="{% url 'art_blog:data_details' item.pk %}">{{ item.name }} ({{ item.artist }})</a>
+                {% with item.image as image_path %}
+                    {% if image_path %}
+                        <img src="{{ image_path }}" alt="{{ item.name }}" style="max-height: 80px;">
+                    {% endif %}
+                {% endwith %}
             </li>
         {% endfor %}
     </ul>

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from os import path
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,9 +41,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'rest_framework',
-    'art_api.apps.ArtApiConfig',
     'art_blog.apps.ArtBlogConfig',
-    'art_shop',
+    'art_shop.apps.ArtShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -129,8 +127,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-MEDIA_ROOT = path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -138,3 +134,6 @@ LOGIN_REDIRECT_URL = reverse_lazy("art_blog:data_list")
 
 CRISPY_ALLOWED_TAMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# url of the art_api
+ART_API_URL = "http://127.0.0.1:8001/art_api/"
