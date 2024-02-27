@@ -1,0 +1,66 @@
+{% extends "main.html" %}
+{% block title %}
+    <h1>'{{item.name}}'</h1>
+    <h3>by {{item.artist}}</h3>
+{% endblock title %}
+{% block content %}
+    <div style="display: flex; justify-content: space-evenly; align-items: center;">
+        <div>
+            <h3>Details for '{{item.name}}'</h3>
+            <h4>Artist: {{ item.artist }}</h4>
+            <p>size: {{ item.size.width }}cm * {{ item.size.height }}cm</p>
+            <p>price: {{price}} €</p>
+        </div>
+        <div style="display: flex;">
+            {% if user.is_authenticated %}
+                <button class="btn btn-outline-primary" style="margin: 20px;" type="submit" form="voteForm">
+                    {% if did_vote %}
+                        unVote
+                    {% else %}
+                        Vote
+                    {% endif %}
+                </button>
+                <form id="voteForm" method="post" style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote" value="1">
+                </form>
+            {% endif %}
+            {% with voters=voters.all %}
+                <ul>
+                    <li style="list-style: none;">Voters: {{voters|length}}</li>
+                    {% for voter in voters %}
+                        <li>{{voter.user.username}}</li>
+                    {% endfor %}
+                </ul>
+            {% endwith %}
+        </div>
+        {% if user.is_authenticated %}
+            {% if not is_sold %}
+                <a href="{% url 'art_shop:buyproduct' item.pk %}" class="btn btn-outline-success" style="margin: 20px;">buy now</a>
+            {% else %}
+                <p>Item already sold.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+        {% with item.image as image_path %}
+            {% if image_path %}
+                <img src="{{ image_path }}" alt="{{ item.name }}" style="margin: 100px; max-height:700px;">
+            {% endif %}
+        {% endwith %}
+    <div style="float: right; margin-top:300px;">
+        {%if comments %}
+        <h4 style="text-align: end;">user comments:</h4>
+        {% endif %}
+        {% for comment in  comments %}
+            <p style="text-align: end;">{{comment}}</p>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <h4 style="text-align: end; margin-top: 50px;">Your comment:</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form }}
+            <input  class="btn btn-outline-primary" type="submit" value="post comment">
+        </form>
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,8 @@
+- Artwork upload should happen in the api:
+    - first upload an image in the api
+    - in the shop refactoring not yet finished:
+        - There is a new table with item and price for each artwork in the api
+- after refactoring buy process still not implemented again
+    - altering records in the api and in the frontend:
+        - api: only for owners -> table refactoring of owner
+        - frontend (shop): setting (new) price

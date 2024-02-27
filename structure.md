@@ -1,8 +1,18 @@
 # Structure
 
 ### art_API
-- art_users: can create artworks (Model) with picture, price, size (Model)
-- can also do what blog users are allowed.
+- api is open (no auth yet)
+- because of hardcoded paths, runserver on port 8001:
+
+
+    python manage.py runserver 8001
+
+
+### Frontend:
+
+!Moved to /frontend/!
+
+cd into frontend before starting server
 
 ### blog:
 - blog_users: can view (api), comment (Model) artwork

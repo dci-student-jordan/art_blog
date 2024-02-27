@@ -1,0 +1,12 @@
+<!-- templates/registration/password_change_form.html -->
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+{% block title %}<h1>Upload Your Artwork</h1>{% endblock title %}
+{% block content %}
+<h3>Please fill up the form to upload an ArtWork to sell:</h3>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+<input class="btn btn-success" type="submit" value="Upload">
+</form>
+{% endblock content %}
