@@ -43,11 +43,11 @@ def add_artwork(request):
         form = AddArtworkForm(request.POST, request.FILES)
         if form.is_valid():
             # Get or refresh the access token
-            access_token = get_or_refresh_access_token()
+            # access_token = get_or_refresh_access_token()
 
             # Construct the request to the art API
             url = settings.ART_API_URL+"artwork/add/"
-            headers = access_token
+            # headers = access_token
             data = {
                 "name": form.cleaned_data['name'],
                 "owner": "ARTshop",
@@ -59,9 +59,9 @@ def add_artwork(request):
 
             print("DATA:", data)
             # Send the POST request to the art API
-            response = requests.post(url, data=data, files=files, headers=headers)
+            response = requests.post(url, data=data, files=files)#, headers=headers)
             if response.status_code == 201:
-                return redirect('success_url')  # Redirect to a success page
+                return redirect(reverse_lazy('art_shop:upload_success'))  # Redirect to a success page
             else:
                 print(response.content)
                 print(response.status_code)
