@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Set background color */
+        body {
+            align-items: end;
+            background-color: #e9ecef; /* light grey background color */
+            text-shadow: -2px 2px 7px rgba(0, 132, 255, 0.2);
+        }
+
+        /* Move buttons to left side */
+        .btn-left {
+            text-align: left;
+        }
+
+        ul li {
+        margin-bottom: 10px; /* Adjust the margin to whatever spacing you prefer */
+        }
+        img, button, input {
+            box-shadow: -10px 10px 25px rgba(0, 132, 255, 0.1);
+        }
+    </style>
+</head>
+<header style="text-align: center;">{% block title %}{% endblock title %}</header>
+<body style="margin: 50px;">
+    <div style="display: flex;">
+        <nav style="width: 270px;">
+            <ul style="list-style: none; margin-top: 100px;">
+                {% if user.is_authenticated %}
+                    <li>you're logged in as <span style="font-style: italic;">{{ user.username }}</span></li>
+                    <li><form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">Logout</button>
+                    </form></li>
+                    {% if user.is_staff %}
+                        <li><a class="btn btn-outline-success" href="{% url 'art_shop:upload' %}">upload Artwork</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="btn btn-outline-primary">log in</a></li>
+                    <li><a class="btn btn-outline-success" href="{% url 'art_shop:register_user' %}">register as user</a></li>
+                {% endif %}
+                <li><a href="{% url 'art_blog:main_page' %}">Home page</a></li>
+                <li><a href="{% url 'art_blog:data_list' %}">Our ArtWorks</a></li>
+            </ul>
+        </nav>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+</body>
+</html>
+
+
+
+    
